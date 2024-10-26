@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Chat</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #chat-log {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 500px;
+      height: 300px;
+      overflow-y: auto;
+    }
+    #message-input {
+      width: 500px;
+      height: 30px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    #send-button {
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Live Chat</h1>
+  <div id="chat-log"></div>
+  <input id="message-input" type="text" placeholder="Type a message...">
+  <button id="send-button">Send</button>
+
+  <script>
+    const socket = new WebSocket('ws://localhost:8080');
+
+    socket.onmessage = (event) => {
+      const chatLog = document.getElementById('chat-log');
+      chatLog.innerHTML += `<p>${event.data}</p>`;
+      chatLog.scrollTop = chatLog.scrollHeight;
+    };
+
+    document.getElementById('send-button').addEventListener('click', () => {
+      const messageInput = document.getElementById('message-input');
+      socket.send(messageInput.value);
+      messageInput.value = '';
+    });
+  </script>
+</body>
+</html>

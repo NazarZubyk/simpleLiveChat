@@ -1,0 +1,28 @@
+{
+  "name": "simplelivechat",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf dist && tsc",
+    "start": "node dist/index.js",
+    "dev": "rm -rf dist && tsc && node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NazarZubyk/simpleLiveChat.git"
+  },
+  "author": "Nazar Zubyk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NazarZubyk/simpleLiveChat/issues"
+  },
+  "homepage": "https://github.com/NazarZubyk/simpleLiveChat#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.1",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0"
+  }
+}
