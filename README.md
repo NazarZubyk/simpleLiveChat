@@ -20,7 +20,7 @@ A real-time chat app built with **Socket.IO**, **Express**, and **TypeScript**.
 ### Installation
 
 ```bash
-git clone https://github.com/your-username/simple-live-chat.git
+git clone https://github.com/NazarZubyk/simpleLiveChat.git
 cd simple-live-chat
 npm install
 ```
