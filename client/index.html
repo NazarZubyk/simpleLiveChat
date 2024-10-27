@@ -4,7 +4,10 @@
   <title>Live Chat</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
     }
     #chat-log {
       padding: 10px;
@@ -29,28 +32,65 @@
       border-radius: 5px;
       cursor: pointer;
     }
+    #username-input {
+      width: 200px;
+      height: 30px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      color: #333;
+    }
+
+    #username-input:focus {
+      border-color: #aaa;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #username-input::placeholder {
+      color: #999;
+    }
   </style>
+  <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
   <h1>Live Chat</h1>
   <div id="chat-log"></div>
-  <input id="message-input" type="text" placeholder="Type a message...">
-  <button id="send-button">Send</button>
+  <div>
+    <input id="message-input" type="text" placeholder="Type a message...">
+    <button id="send-button">Send</button>
+  </div>
+  
+  <input id="username-input" type="text" placeholder="username" />
+
 
   <script>
-    const socket = new WebSocket('ws://localhost:8080');
-
-    socket.onmessage = (event) => {
-      const chatLog = document.getElementById('chat-log');
-      chatLog.innerHTML += `<p>${event.data}</p>`;
-      chatLog.scrollTop = chatLog.scrollHeight;
-    };
+    const socket = io('http://localhost:3000');
 
     document.getElementById('send-button').addEventListener('click', () => {
-      const messageInput = document.getElementById('message-input');
-      socket.send(messageInput.value);
-      messageInput.value = '';
+
+      const username = document.getElementById('username-input').value;
+      const message = document.getElementById('message-input').value;
+      if(message === '') return;
+      socket.emit("add message", `${username} => ${message}`);
+
+      document.getElementById('message-input').value = '';
+
     });
+
+    socket.on('chat history', (messages) => {
+
+      const chatLog = document.getElementById('chat-log');
+      chatLog.innerHTML = '';
+      messages.forEach((message) => {
+        const messageElement = document.createElement('p');
+        messageElement.textContent = message;
+        chatLog.appendChild(messageElement);
+      });
+    });
+    
   </script>
 </body>
 </html>
