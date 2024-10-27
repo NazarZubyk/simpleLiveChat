@@ -23,13 +23,14 @@ A real-time chat app built with **Socket.IO**, **Express**, and **TypeScript**.
 git clone https://github.com/your-username/simple-live-chat.git
 cd simple-live-chat
 npm install
+```
 
 ### Run
 
 ```bash
 npm run dev
 Open http://localhost:3000/ to access the app.
-
+```
 
 
 ### Structure
